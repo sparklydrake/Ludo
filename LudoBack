@@ -1,0 +1,60 @@
+import numpy as np
+
+class Jogador:
+    def __init__(self,cor : str,nome : str =None):
+        self.cor=cor
+        if nome==None:
+            self.nome=cor
+        else:
+            self.nome=nome
+        self.pinos=[]
+
+    def cria_pinos(self):
+        self.pino0=Pino(self,self.cor,0,self.start)
+        self.pino1=Pino(self,self.cor,1,self.start+1)
+        self.pino2=Pino(self,self.cor,2,self.start+2)
+        self.pino3=Pino(self,self.cor,3,self.start+3)        
+    
+class Pino:
+    def __init__(self,jogador : Jogador,cor,numero : int,posição : int):
+        self.posicao=posição
+        self.cor=cor
+        jogador.pinos+=[self.posicao]
+        
+    def dado(self):
+        return np.random.randint(0,7)
+
+    def andar(self):
+        jogador=self.jogador
+        casas=self.dado()
+        self.posicao+=casas
+        jogador.pinos[self.numero]+=casas
+          
+class Vermelho(Jogador):
+    def __init__(self,nome=None,cor='Vermelho'):
+        super().__init__(cor,nome)
+        self.start=0
+        self.tabuleiro=np.delete(np.array([i for i in range(16,75)]),67)
+        
+class Azul(Jogador):
+    def __init__(self,nome=None,cor='Azul'):
+        super().__init__(cor,nome)
+        self.start=4
+        self.tabuleiro=np.array([i for i in range(55,68)]+[i for i in range(16,54)]
+                                +[i for i in range(75,81)]+[74])
+
+class Verde(Jogador):
+    def __init__(self,nome=None,cor='Verde'):
+        super().__init__(cor,nome)
+        self.start=12
+        self.tabuleiro=np.array([i for i in range(29,68)]+[i for i in range(16,28)]
+                                +[i for i in range(87,93)]+[74])
+
+class Amarelo(Jogador):
+    def __init__(self,nome=None,cor='Amarelo'):
+        super().__init__(cor,nome)
+        self.start=8
+        self.tabuleiro=np.array([i for i in range(42,68)]+[i for i in range(16,41)]
+                                +[i for i in range(81,87)]+[74])
+
+        
