@@ -16,11 +16,15 @@ class Jogador:
         self.pino3=Pino(self,self.cor,3,self.start)        
     
 class Pino:
-    def __init__(self,jogador : Jogador,cor,numero : int,posição : int):
-        self.posicao=posição
+    def __init__(self,jogador : Jogador,cor,numero : int,posição : int,fora : bool=False):
+        if fora==True:
+            self.posicao=posição
+        else:
+            
         self.cor=cor
         self.jogador=jogador
         self.numero=numero
+        self.fora=fora
         jogador.pinos+=[self.posicao]
         
     def dado(self):
@@ -32,17 +36,24 @@ class Pino:
         indice_atual=np.where(jogador.tabuleiro==self.posicao)[0][0]
         novo_indice=indice_atual+casas
         self.posicao=jogador.tabuleiro[novo_indice]
-        jogador.pinos[self.numero]+=casas
+        jogador.pinos[self.numero]=self.posicao
+        
+    def morreu(self):
+        jogador=self.jogador
+        self.posição=jogador.start
+        jogador.pinos[self.numero]=self.posicao
           
 class Vermelho(Jogador):
     def __init__(self,nome=None,cor='Vermelho'):
         super().__init__(cor,nome)
+        self.casas=(0,1,2,3)
         self.start=16
         self.tabuleiro=np.delete(np.array([i for i in range(16,75)]),67)
         
 class Azul(Jogador):
     def __init__(self,nome=None,cor='Azul'):
         super().__init__(cor,nome)
+        self.casas=(4,5,6,7)
         self.start=55
         self.tabuleiro=np.array([i for i in range(55,68)]+[i for i in range(16,54)]
                                 +[i for i in range(75,81)]+[74])
@@ -50,6 +61,7 @@ class Azul(Jogador):
 class Verde(Jogador):
     def __init__(self,nome=None,cor='Verde'):
         super().__init__(cor,nome)
+        self.casas=(12,13,14,15)
         self.start=29
         self.tabuleiro=np.array([i for i in range(29,68)]+[i for i in range(16,28)]
                                 +[i for i in range(87,93)]+[74])
@@ -58,8 +70,8 @@ class Verde(Jogador):
 class Amarelo(Jogador):
     def __init__(self,nome=None,cor='Amarelo'):
         super().__init__(cor,nome)
+        self.casas=(8,9,10,11)
         self.start=42
         self.tabuleiro=np.array([i for i in range(42,68)]+[i for i in range(16,41)]
                                 +[i for i in range(81,87)]+[74])
 
-        
