@@ -65,7 +65,8 @@ class Pino:
         
     def morreu(self):
         jogador=self.jogador
-        self.posição=jogador.start
+        lugarvazio=[lugar for lugar in jogador.casas not in jogador.pinos]
+        self.posição=lugarvazio[0]
         jogador.pinos[self.numero]=self.posicao
          
     def sair(self):
@@ -81,13 +82,7 @@ def verifica_emcima(jogadora,pinA,jogadoresdic,pinos):
                 if pinA.posicao==pinob.posicao:
                     pinob.morreu()
   
-        
-        
-        
-        
-        
-        
-        
+            
         
         
 class Vermelho(Jogador):
