@@ -33,6 +33,6 @@ def main():
             pinA.andar()
             verifica_emcima(jogador,pinA,jogadoresdic,pinos)
             posicoespinos[jogador]=jogadoresdic[jogador].pinos
-            listaposicoes+=[posicoespinos[nome]]
+            listaposicoes+=[posicoespinos[jogador]]
             ultimojogador=jogador
     print(f'{ultimojogador} venceu')
