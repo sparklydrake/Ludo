@@ -14,12 +14,33 @@ class Jogador:
         self.pino1=Pino(self,self.cor,1,self.start)
         self.pino2=Pino(self,self.cor,2,self.start)
         self.pino3=Pino(self,self.cor,3,self.start)
-
+    
+    def arcoiris(self):
+        if self.cor=='Vermelho':
+            self.casas=(0,1,2,3)
+            self.start=16
+            tab=np.array([i for i in range(16,75)])
+            self.tabuleiro = np.delete(tab,np.where(tab==67)[0][0])
+        elif self.cor=='Azul':
+            self.casas=(4,5,6,7)
+            self.start=55
+            self.tabuleiro=np.array([i for i in range(55,68)]+[i for i in range(16,54)]
+                                    +[i for i in range(75,81)]+[74])
+        elif self.nome=='Verde':
+            self.casas=(12,13,14,15)
+            self.start=29
+            self.tabuleiro=np.array([i for i in range(29,68)]+[i for i in range(16,28)]
+                                    +[i for i in range(87,93)]+[74])
+        else:
+            self.casas=(8,9,10,11)
+            self.start=42
+            self.tabuleiro=np.array([i for i in range(42,68)]+[i for i in range(16,41)]
+                                    +[i for i in range(81,87)]+[74])
     
 class Pino:
     def __init__(self,jogador : Jogador,cor,numero : int,posição : int,fora : bool=False):
-        if fora==True:
-            self.posicao=posição
+        if fora==False:
+            self.posicao=jogador.casas
         #else:
             
         self.cor=cor
@@ -33,18 +54,42 @@ class Pino:
 
     def andar(self):
         jogador=self.jogador
-        casas=self.dado()
-        indice_atual=np.where(jogador.tabuleiro==self.posicao)[0][0]
-        novo_indice=indice_atual+casas
-        self.posicao=jogador.tabuleiro[novo_indice]
-        jogador.pinos[self.numero]=self.posicao
+        if self.fora==False:
+            self.sair()
+        else:
+            indice_atual=np.where(jogador.tabuleiro==self.posicao)[0][0]
+            casas=self.dado()
+            novo_indice=indice_atual+casas
+            self.posicao=jogador.tabuleiro[novo_indice]
+            jogador.pinos[self.numero]=self.posicao
         
     def morreu(self):
         jogador=self.jogador
         self.posição=jogador.start
         jogador.pinos[self.numero]=self.posicao
          
-                
+    def sair(self):
+        jogada=self.dado()
+        if jogada==6:
+            self.fora=True
+            self.posicao=self.jogador.start
+
+def verifica_emcima(jogadora,pinA,jogadoresdic,pinos):
+    for jogadorb in jogadoresdic:
+        if jogadora!=jogadorb:
+            for pinob in pinos[jogadorb]:
+                if pinA.posicao==pinob.posicao:
+                    pinob.morreu()
+  
+        
+        
+        
+        
+        
+        
+        
+        
+        
 class Vermelho(Jogador):
     def __init__(self,nome=None,cor='Vermelho'):
         super().__init__(cor,nome)
