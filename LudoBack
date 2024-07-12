@@ -2,24 +2,25 @@ import numpy as np
 
 class Jogador:
     def __init__(self,cor : str,nome : str =None):
-        self.cor=cor
         if nome==None:
             self.nome=cor
         else:
-            self.nome=nome
+            self.nome=nome   
         self.pinos=[]
+        self.cor=cor
 
     def cria_pinos(self):
         self.pino0=Pino(self,self.cor,0,self.start)
         self.pino1=Pino(self,self.cor,1,self.start)
         self.pino2=Pino(self,self.cor,2,self.start)
-        self.pino3=Pino(self,self.cor,3,self.start)        
+        self.pino3=Pino(self,self.cor,3,self.start)
+
     
 class Pino:
     def __init__(self,jogador : Jogador,cor,numero : int,posição : int,fora : bool=False):
         if fora==True:
             self.posicao=posição
-        else:
+        #else:
             
         self.cor=cor
         self.jogador=jogador
@@ -42,7 +43,8 @@ class Pino:
         jogador=self.jogador
         self.posição=jogador.start
         jogador.pinos[self.numero]=self.posicao
-          
+         
+                
 class Vermelho(Jogador):
     def __init__(self,nome=None,cor='Vermelho'):
         super().__init__(cor,nome)
