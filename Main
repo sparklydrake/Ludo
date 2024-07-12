@@ -1,0 +1,22 @@
+from Ludo import *
+
+def sair(pino):
+    fora=pino.fora
+    if fora==False:
+        jogada=pino.dado()
+        if jogada==6:
+            pino.fora=True
+
+def main():
+    resp=int(input('quantos jogadores?'))
+    jogadores={}
+    i=0
+    while i<resp:
+        cor=input('qual cor?')
+        nome=f'jogador{i+1}'
+        jogadores[nome]=Jogador(cor,nome)
+        i+=1
+        for jogador in jogadores:
+            jogadores[jogador].arcoiris()
+        print(jogadores['jogador1'].start)
+main()
